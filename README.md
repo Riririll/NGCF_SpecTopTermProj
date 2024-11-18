@@ -59,6 +59,7 @@ We provide Amazon-book dataset:
 
 ## Dataset (NCF)
 We provide Amazon-book dataset that optimize to use with NCF model:
+
 train.rating:
 * Train file.
 * Each Line is a training instance: userID\t itemID\t rating\t timestamp (if have)
