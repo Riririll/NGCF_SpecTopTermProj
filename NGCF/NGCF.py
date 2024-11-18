@@ -5,13 +5,14 @@ Wang Xiang et al. Neural Graph Collaborative Filtering. In SIGIR 2019.
 
 @author: Xiang Wang (xiangwang@u.nus.edu)
 '''
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import os
 import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
-
+tf.disable_v2_behavior()
 from utility.helper import *
 from utility.batch_test import *
+
 
 class NGCF(object):
     def __init__(self, data_config, pretrain_data):
@@ -114,7 +115,7 @@ class NGCF(object):
     def _init_weights(self):
         all_weights = dict()
 
-        initializer = tf.contrib.layers.xavier_initializer()
+        initializer = tf.keras.initializers.GlorotUniform()
 
         if self.pretrain_data is None:
             all_weights['user_embedding'] = tf.Variable(initializer([self.n_users, self.emb_dim]), name='user_embedding')
@@ -277,17 +278,17 @@ class NGCF(object):
 
         regularizer = tf.nn.l2_loss(users) + tf.nn.l2_loss(pos_items) + tf.nn.l2_loss(neg_items)
         regularizer = regularizer/self.batch_size
-        
+
         # In the first version, we implement the bpr loss via the following codes:
         # We report the performance in our paper using this implementation.
         maxi = tf.log(tf.nn.sigmoid(pos_scores - neg_scores))
         mf_loss = tf.negative(tf.reduce_mean(maxi))
-        
+
         ## In the second version, we implement the bpr loss via the following codes to avoid 'NAN' loss during training:
         ## However, it will change the training performance and training performance.
         ## Please retrain the model and do a grid search for the best experimental setting.
         # mf_loss = tf.reduce_sum(tf.nn.softplus(-(pos_scores - neg_scores)))
-        
+
 
         emb_loss = self.decay * regularizer
 
