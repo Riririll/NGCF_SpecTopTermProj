@@ -6,7 +6,7 @@ This is our Tensorflow implementation for the paper:
 Author: Dr. Xiang Wang (xiangwang at u.nus.edu)
 
 ## Citation 
-
+```
 @inproceedings{NGCF19,
   author    = {Xiang Wang and
                Xiangnan He and
