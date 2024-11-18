@@ -38,8 +38,8 @@ Example to Run the Codes
     --mess_dropout [0.1,0.1,0.1]
 ```
 
-## Dataset
-We provide two processed datasets: Gowalla and Amazon-book.
+## Dataset (NGCF)
+We provide Amazon-book dataset:
 * `train.txt`
   * Train file.
   * Each line is a user with her/his positive interactions with items: userID\t a list of itemID\n.
@@ -56,3 +56,18 @@ We provide two processed datasets: Gowalla and Amazon-book.
 * `item_list.txt`
   * Item file.
   * Each line is a triplet (org_id, remap_id) for one item, where org_id and remap_id represent the ID of the item in the original and our datasets, respectively.
+
+## Dataset (NCF)
+We provide Amazon-book dataset that optimize to use with NCF model:
+train.rating:
+* Train file.
+* Each Line is a training instance: userID\t itemID\t rating\t timestamp (if have)
+
+test.rating:
+* Test file (positive instances).
+* Each Line is a testing instance: userID\t itemID\t rating\t timestamp (if have)
+
+test.negative
+* Test file (negative instances).
+* Each line corresponds to the line of test.rating, containing 99 negative samples.
+* Each line is in the format: (userID,itemID)\t negativeItemID1\t negativeItemID2 ...
