@@ -40,7 +40,7 @@ def mean_average_precision(rs):
     return np.mean([average_precision(r) for r in rs])
 
 
-def dcg_at_k(r, 10, method=1):
+def dcg_at_k(r, k, method=1):
     """Score is discounted cumulative gain (dcg)
     Relevance is positive real values.  Can use binary
     as the previous methods.
@@ -58,7 +58,7 @@ def dcg_at_k(r, 10, method=1):
     return 0.
 
 
-def ndcg_at_k(r, 10, method=1):
+def ndcg_at_k(r, k, method=1):
     """Score is normalized discounted cumulative gain (ndcg)
     Relevance is positive real values.  Can use binary
     as the previous methods.
@@ -76,7 +76,7 @@ def recall_at_k(r, k, all_pos_num):
     return np.sum(r) / all_pos_num
 
 
-def hit_at_k(r, 10):
+def hit_at_k(r, k):
     r = np.array(r)[:10]
     if np.sum(r) > 0:
         return 1.
