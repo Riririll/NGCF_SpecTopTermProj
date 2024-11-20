@@ -40,14 +40,14 @@ def mean_average_precision(rs):
     return np.mean([average_precision(r) for r in rs])
 
 
-def dcg_at_k(r, k, method=1):
+def dcg_at_k(r, 10, method=1):
     """Score is discounted cumulative gain (dcg)
     Relevance is positive real values.  Can use binary
     as the previous methods.
     Returns:
         Discounted cumulative gain
     """
-    r = np.asfarray(r)[:k]
+    r = np.asfarray(r)[:10]
     if r.size:
         if method == 0:
             return r[0] + np.sum(r[1:] / np.log2(np.arange(2, r.size + 1)))
@@ -58,17 +58,17 @@ def dcg_at_k(r, k, method=1):
     return 0.
 
 
-def ndcg_at_k(r, k, method=1):
+def ndcg_at_k(r, 10, method=1):
     """Score is normalized discounted cumulative gain (ndcg)
     Relevance is positive real values.  Can use binary
     as the previous methods.
     Returns:
         Normalized discounted cumulative gain
     """
-    dcg_max = dcg_at_k(sorted(r, reverse=True), k, method)
+    dcg_max = dcg_at_k(sorted(r, reverse=True), 10, method)
     if not dcg_max:
         return 0.
-    return dcg_at_k(r, k, method) / dcg_max
+    return dcg_at_k(r, 10, method) / dcg_max
 
 
 def recall_at_k(r, k, all_pos_num):
@@ -76,8 +76,8 @@ def recall_at_k(r, k, all_pos_num):
     return np.sum(r) / all_pos_num
 
 
-def hit_at_k(r, k):
-    r = np.array(r)[:k]
+def hit_at_k(r, 10):
+    r = np.array(r)[:10]
     if np.sum(r) > 0:
         return 1.
     else:
